@@ -10,6 +10,14 @@ I will also try to add new examples when I find one.
 _Note: consider this project as a showcase._
 _You probably want to structure things differently for a real-life project._
 
+## Changelog
+
+See [here](./CHANGELOG.md).
+
+### Coming soon...
+
+- Examples on how to handle errors
+
 ## Try it!
 
 ```
@@ -48,10 +56,6 @@ Tapir generates the OpenAPI YAML from your endpoints definitions.
 You can then either:
 - expose the YAML (through Tapir or not) and use it from a Swagger UI deployed by yourself the way you want (more customizable)
 - let Tapir exposes everything automatically with the `tapir-swagger-ui-play` dependency (as in this sample)
-
-## Changelog
-
-See [here](./CHANGELOG.md).
 
 ## Documentation
 
