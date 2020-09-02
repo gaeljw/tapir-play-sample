@@ -26,7 +26,7 @@ libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-openapi-circe-yam
 // You can also host Swagger UI by yourself and get rid of this dependency
 libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-play" % tapirVersion
 
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.github.gaeljw.controllers._"
