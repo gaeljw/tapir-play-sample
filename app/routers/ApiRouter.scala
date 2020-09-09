@@ -38,7 +38,18 @@ object ApiEndpoints {
     )
     .out(statusCode(StatusCode.Created))
 
-  // TODO add examples with error handling
+  val getBookEndpoint: Endpoint[String, String, Book, Nothing] = endpoint.post
+    .tag("Books API")
+    .summary("Get a book (by title)")
+    .in("books")
+    .in("find")
+    .in(
+      query[String]("title")
+        .description("The title to look for")
+    )
+    .out(jsonBody[Book])
+    .errorOut(statusCode(StatusCode.NotFound))
+    .errorOut(jsonBody[String])
 
 }
 
@@ -53,13 +64,21 @@ class ApiController @Inject()(bookRepository: BookRepository) {
     Future.successful(Right(bookRepository.addBook(book)))
   }
 
+  def getBook(title: String): Future[Either[String, Book]] = {
+    Future.successful {
+      bookRepository.getBooks()
+        .find(_.title == title)
+        .toRight(s"No book with exact title $title")
+    }
+  }
+
 }
 
 object ApiDocumentation {
 
   import ApiEndpoints._
 
-  private val openApiDocs: OpenAPI = List(booksListingEndpoint, addBookEndpoint).toOpenAPI("Tapir Play Sample", "1.0.0")
+  private val openApiDocs: OpenAPI = List(booksListingEndpoint, addBookEndpoint, getBookEndpoint).toOpenAPI("Tapir Play Sample", "1.0.0")
 
   val openApiYml: String = openApiDocs.toYaml
 
@@ -77,11 +96,14 @@ class ApiRouter @Inject()(apiController: ApiController)
     openApiRoute
       .orElse(booksListingRoute)
       .orElse(addBookRoute)
+      .orElse(getBookRoute)
   }
 
   private val booksListingRoute: Routes = booksListingEndpoint.toRoute(_ => apiController.listBooks())
 
   private val addBookRoute: Routes = addBookEndpoint.toRoute(apiController.addBook)
+
+  private val getBookRoute: Routes = getBookEndpoint.toRoute(apiController.getBook)
 
   // Doc will be on /docs
   private val openApiRoute: Routes = new SwaggerPlay(openApiYml).routes

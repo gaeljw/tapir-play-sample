@@ -14,10 +14,6 @@ _You probably want to structure things differently for a real-life project._
 
 See [here](./CHANGELOG.md).
 
-### Coming soon...
-
-- Examples on how to handle errors
-
 ## Try it!
 
 ```

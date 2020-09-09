@@ -36,6 +36,22 @@ class ApiRouterSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
       status(added) mustBe CREATED
     }
 
+    "get a book by title" in {
+      val book = route(app, FakeRequest(GET, "/books/find?title=Pharaoh")).get
+
+      status(book) mustBe OK
+      contentType(book) mustBe Some("application/json")
+      contentAsJson(book) mustEqual Json.parse("""{"title":"Pharaoh","year":1897,"author":{"name":"Boleslaw Prus"}}""")
+    }
+
+    "get a book by title - not found" in {
+      val book = route(app, FakeRequest(GET, "/books/find?title=ThisOneDoesNotExist")).get
+
+      status(book) mustBe NOT_FOUND
+      contentType(book) mustBe Some("application/json")
+      contentAsJson(book) mustEqual Json.parse(""""plop"""")
+    }
+
   }
 
 }
