@@ -8,7 +8,7 @@ import scala.concurrent.Future
 
 
 @Singleton
-class ApiController @Inject()(bookRepository: BookRepository) {
+class BookController @Inject()(bookRepository: BookRepository) {
 
   def listBooks(): Future[Either[Unit, Seq[Book]]] = {
     Future.successful(Right(bookRepository.getBooks()))

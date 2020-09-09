@@ -5,19 +5,19 @@ import sttp.model.StatusCode
 import sttp.tapir._
 import sttp.tapir.json.play._
 
-object ApiEndpoints {
+object BookEndpoints {
 
-  val booksListingEndpoint: Endpoint[Unit, Unit, Seq[Book], Nothing] = endpoint.get
+  private val baseBookEndpoint = endpoint
     .tag("Books API")
-    .summary("List all books")
     .in("books")
+
+  val booksListingEndpoint: Endpoint[Unit, Unit, Seq[Book], Nothing] = baseBookEndpoint.get
+    .summary("List all books")
     .in("list" / "all")
     .out(jsonBody[Seq[Book]])
 
-  val addBookEndpoint: Endpoint[Book, Unit, Unit, Nothing] = endpoint.post
-    .tag("Books API")
+  val addBookEndpoint: Endpoint[Book, Unit, Unit, Nothing] = baseBookEndpoint.post
     .summary("Add a book")
-    .in("books")
     .in("add")
     .in(
       jsonBody[Book]
@@ -26,10 +26,8 @@ object ApiEndpoints {
     )
     .out(statusCode(StatusCode.Created))
 
-  val getBookEndpoint: Endpoint[String, String, Book, Nothing] = endpoint.get
-    .tag("Books API")
+  val getBookEndpoint: Endpoint[String, String, Book, Nothing] = baseBookEndpoint.get
     .summary("Get a book (by title)")
-    .in("books")
     .in("find")
     .in(
       query[String]("title")

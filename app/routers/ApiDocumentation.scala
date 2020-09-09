@@ -7,7 +7,7 @@ import sttp.tapir.openapi.circe.yaml._
 
 object ApiDocumentation {
 
-  import ApiEndpoints._
+  import BookEndpoints._
 
   private val openApiDocs: OpenAPI = List(
     booksListingEndpoint,

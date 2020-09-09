@@ -16,11 +16,11 @@ import sttp.tapir.swagger.play.SwaggerPlay
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class ApiRouter @Inject()(apiController: ApiController)
+class ApiRouter @Inject()(apiController: BookController)
                          (implicit val materializer: Materializer, ec: ExecutionContext) extends SimpleRouter {
 
   import ApiDocumentation._
-  import ApiEndpoints._
+  import BookEndpoints._
 
   override def routes: Routes = {
     // Routes are partial functions

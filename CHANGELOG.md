@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - Examples of handling errors
+- Use a "base" endpoint to share common definitions
 - Split classes in multiple files
 - Route to docs by default
 
