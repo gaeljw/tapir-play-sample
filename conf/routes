@@ -4,6 +4,7 @@
 # ~~~~
 
 # An example API router
-->        /        routers.ApiRouter
+->         /        routers.ApiRouter
 
 # Here you can also add "regular" Play routes and controllers (not using Tapir)
+GET        /        controllers.Default.redirect(to = "./docs/")
