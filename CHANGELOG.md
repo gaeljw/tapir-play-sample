@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming...
+## 0.2.0 (2020-09-09)
 
 - Examples of handling errors
 - Use a "base" endpoint to share common definitions
