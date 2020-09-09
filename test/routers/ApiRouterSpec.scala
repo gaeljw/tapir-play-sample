@@ -49,7 +49,7 @@ class ApiRouterSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
 
       status(book) mustBe NOT_FOUND
       contentType(book) mustBe Some("application/json")
-      contentAsJson(book) mustEqual Json.parse(""""plop"""")
+      contentAsJson(book) mustEqual Json.parse(""""No book with exact title ThisOneDoesNotExist"""")
     }
 
   }
