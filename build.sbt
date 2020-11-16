@@ -7,7 +7,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.13.3"
 
-val tapirVersion = "0.16.16"
+val tapirVersion = "0.17.0-M8"
 
 libraryDependencies += guice
 
