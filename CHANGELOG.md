@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0 (2020-11-16)
+
+- Update Tapir to 0.17.0-M8
+
 ## 0.2.0 (2020-09-09)
 
 - Examples of handling errors

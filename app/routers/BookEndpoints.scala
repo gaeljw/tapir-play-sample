@@ -11,12 +11,12 @@ object BookEndpoints {
     .tag("Books API")
     .in("books")
 
-  val booksListingEndpoint: Endpoint[Unit, Unit, Seq[Book], Nothing] = baseBookEndpoint.get
+  val booksListingEndpoint: Endpoint[Unit, Unit, Seq[Book], Any] = baseBookEndpoint.get
     .summary("List all books")
     .in("list" / "all")
     .out(jsonBody[Seq[Book]])
 
-  val addBookEndpoint: Endpoint[Book, Unit, Unit, Nothing] = baseBookEndpoint.post
+  val addBookEndpoint: Endpoint[Book, Unit, Unit, Any] = baseBookEndpoint.post
     .summary("Add a book")
     .in("add")
     .in(
@@ -26,7 +26,7 @@ object BookEndpoints {
     )
     .out(statusCode(StatusCode.Created))
 
-  val getBookEndpoint: Endpoint[String, String, Book, Nothing] = baseBookEndpoint.get
+  val getBookEndpoint: Endpoint[String, String, Book, Any] = baseBookEndpoint.get
     .summary("Get a book (by title)")
     .in("find")
     .in(
