@@ -3,7 +3,13 @@ organization := "com.github.gaeljw"
 
 version := "0.4.0-SNAPSHOT"
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+lazy val root = (project in file("."))
+  .enablePlugins(PlayScala)
+  .settings(
+    publishArtifact := false
+  )
+
+publishTo := Some(Resolver.file("Unused transient repository", file("target/unusedrepo")))
 
 scalaVersion := "2.13.3"
 
