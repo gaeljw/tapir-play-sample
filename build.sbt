@@ -1,8 +1,6 @@
 name := """tapir-play-sample"""
 organization := "com.github.gaeljw"
 
-version := "0.4.0-SNAPSHOT"
-
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .settings(
