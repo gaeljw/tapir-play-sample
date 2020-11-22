@@ -1,17 +1,18 @@
 package routers
 
+import javax.inject.{Inject, Singleton}
 import sttp.tapir.docs.openapi._
 import sttp.tapir.openapi.OpenAPI
 import sttp.tapir.openapi.circe.yaml._
 
+@Singleton
+class ApiDocumentation @Inject()(bookEndpoints: BookEndpoints) {
 
-object ApiDocumentation {
-
-  import BookEndpoints._
+  import bookEndpoints._
 
   private val openApiDocs: OpenAPI = List(
     booksListingEndpoint,
-    addBookEndpoint,
+    addBookEndpoint.endpoint, // This one is a PartialServerEndpoint
     getBookEndpoint
   )
     .toOpenAPI("Tapir Play Sample", "1.0.0")

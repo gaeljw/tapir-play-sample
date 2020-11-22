@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.0 (2020-11-22)
+
+- Add example of authenticated route and partial server logic
+  - Changed from a "static" approach to DI approach
+
 ## 0.3.0 (2020-11-16)
 
 - Update Tapir to 0.17.0-M8

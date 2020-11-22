@@ -1,13 +1,22 @@
 package routers
 
+import javax.inject.{Inject, Singleton}
 import models.{Author, Book}
 import sttp.model.StatusCode
 import sttp.tapir._
 import sttp.tapir.json.play._
+import sttp.tapir.server.PartialServerEndpoint
 
-object BookEndpoints {
+import scala.concurrent.Future
+
+@Singleton
+class BookEndpoints @Inject()(securedEndpoints: SecuredEndpoints) {
 
   private val baseBookEndpoint = endpoint
+    .tag("Books API")
+    .in("books")
+
+  private val baseSecuredBookEndpoint: PartialServerEndpoint[AuthenticatedContext, Unit, AuthError, Unit, Any, Future] = securedEndpoints.securedWithBearer
     .tag("Books API")
     .in("books")
 
@@ -16,7 +25,7 @@ object BookEndpoints {
     .in("list" / "all")
     .out(jsonBody[Seq[Book]])
 
-  val addBookEndpoint: Endpoint[Book, Unit, Unit, Any] = baseBookEndpoint.post
+  val addBookEndpoint: PartialServerEndpoint[AuthenticatedContext, Book, AuthError, Unit, Any, Future] = baseSecuredBookEndpoint.post
     .summary("Add a book")
     .in("add")
     .in(

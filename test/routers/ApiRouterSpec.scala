@@ -28,12 +28,20 @@ class ApiRouterSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
             |]""".stripMargin)
     }
 
-    "add a book" in {
+    "add a book with valid authentication" in {
       val book = Book("A new book", 2020, Author("John Doe"))
 
-      val added = route(app, FakeRequest(POST, "/books/add", FakeHeaders(), Json.toJson(book).toString())).get
+      val added = route(app, FakeRequest(POST, "/books/add", FakeHeaders(Seq("Authorization" -> "Bearer SecretKey")), Json.toJson(book).toString())).get
 
       status(added) mustBe CREATED
+    }
+
+    "add a book with invalid authentication" in {
+      val book = Book("A new book", 2020, Author("John Doe"))
+
+      val added = route(app, FakeRequest(POST, "/books/add", FakeHeaders(Seq("Authorization" -> "Bearer BadKey")), Json.toJson(book).toString())).get
+
+      status(added) mustBe UNAUTHORIZED
     }
 
     "get a book by title" in {
