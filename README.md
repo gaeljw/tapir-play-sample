@@ -22,6 +22,14 @@ sbt run
 
 And go to http://localhost:9000/docs/.
 
+## Content
+
+- Basic endpoints with shared logic, see `BookEndpoints`
+  - Reading input body
+  - Reading input authentication headers and shared authentication logic
+  - Sending output body and errors
+- Swagger Documentation, see `ApiDocumentation` 
+
 ## Takeaway
 
 ### Router

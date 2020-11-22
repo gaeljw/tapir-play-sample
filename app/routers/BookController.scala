@@ -14,7 +14,7 @@ class BookController @Inject()(bookRepository: BookRepository) {
     Future.successful(Right(bookRepository.getBooks()))
   }
 
-  def addBook(book: Book): Future[Either[Unit, Unit]] = {
+  def addBook(book: Book): Future[Either[AuthError, Unit]] = {
     Future.successful(Right(bookRepository.addBook(book)))
   }
 
