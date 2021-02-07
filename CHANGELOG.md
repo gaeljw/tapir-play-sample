@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0 (2021-02-07)
+
+- Update Tapir to 0.17.9
+
 ## 0.4.0 (2020-11-22)
 
 - Add example of authenticated route and partial server logic

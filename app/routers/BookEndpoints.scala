@@ -4,6 +4,7 @@ import javax.inject.{Inject, Singleton}
 import models.{Author, Book}
 import sttp.model.StatusCode
 import sttp.tapir._
+import sttp.tapir.generic.auto._
 import sttp.tapir.json.play._
 import sttp.tapir.server.PartialServerEndpoint
 
