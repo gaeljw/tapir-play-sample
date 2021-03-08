@@ -1,12 +1,12 @@
-package repositories
+package books.infrastructure.data
+
+import books.domain._
 
 import java.util.concurrent.atomic.AtomicReference
-
 import javax.inject.Singleton
-import models.{Author, Book}
 
 @Singleton
-class BookRepository {
+class AtomicBookRepository extends BookRepository {
 
   private val books: AtomicReference[Seq[Book]] = new AtomicReference(
     Seq(
@@ -19,8 +19,8 @@ class BookRepository {
     )
   )
 
-  def getBooks(): Seq[Book] = books.get()
+  override def getBooks: Seq[Book] = books.get()
 
-  def addBook(book: Book): Unit = books.getAndUpdate(books => books :+ book)
+  override def addBook(book: Book): Unit = books.getAndUpdate(books => books :+ book)
 
 }

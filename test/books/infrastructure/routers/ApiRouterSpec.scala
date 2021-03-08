@@ -1,6 +1,6 @@
-package routers
+package books.infrastructure.routers
 
-import models.{Author, Book}
+import books.domain.{Author, Book}
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneAppPerTest
 import play.api.libs.json.Json
@@ -17,8 +17,7 @@ class ApiRouterSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
       status(books) mustBe OK
       contentType(books) mustBe Some("application/json")
       contentAsJson(books) mustEqual
-        Json.parse(
-          """[
+        Json.parse("""[
             |{"title":"The Sorrows of Young Werther","year":1774,"author":{"name":"Johann Wolfgang von Goethe"}},
             |{"title":"Iliad","year":-8000,"author":{"name":"Homer"}},
             |{"title":"Nad Niemnem","year":1888,"author":{"name":"Eliza Orzeszkowa"}},
@@ -31,7 +30,15 @@ class ApiRouterSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
     "add a book with valid authentication" in {
       val book = Book("A new book", 2020, Author("John Doe"))
 
-      val added = route(app, FakeRequest(POST, "/books/add", FakeHeaders(Seq("Authorization" -> "Bearer SecretKey")), Json.toJson(book).toString())).get
+      val added = route(
+        app,
+        FakeRequest(
+          POST,
+          "/books/add",
+          FakeHeaders(Seq("Authorization" -> "Bearer SecretKey")),
+          Json.toJson(book).toString()
+        )
+      ).get
 
       status(added) mustBe CREATED
     }
@@ -39,7 +46,15 @@ class ApiRouterSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
     "add a book with invalid authentication" in {
       val book = Book("A new book", 2020, Author("John Doe"))
 
-      val added = route(app, FakeRequest(POST, "/books/add", FakeHeaders(Seq("Authorization" -> "Bearer BadKey")), Json.toJson(book).toString())).get
+      val added = route(
+        app,
+        FakeRequest(
+          POST,
+          "/books/add",
+          FakeHeaders(Seq("Authorization" -> "Bearer BadKey")),
+          Json.toJson(book).toString()
+        )
+      ).get
 
       status(added) mustBe UNAUTHORIZED
     }
