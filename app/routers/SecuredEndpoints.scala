@@ -17,7 +17,7 @@ class SecuredEndpoints @Inject()(tokenAuthenticator: TokenAuthenticator) {
     .errorOut(statusCode(StatusCode.Unauthorized))
     .errorOut(jsonBody[AuthError])
 
-  val securedWithBearer: PartialServerEndpoint[AuthenticatedContext, Unit, AuthError, Unit, Any, Future] = securedWithBearerEndpoint
+  val securedWithBearer: PartialServerEndpoint[String, AuthenticatedContext, Unit, AuthError, Unit, Any, Future] = securedWithBearerEndpoint
     .serverLogicForCurrent(tokenAuthenticator.authenticateToken)
 
 }

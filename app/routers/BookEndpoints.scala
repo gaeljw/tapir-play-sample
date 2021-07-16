@@ -17,7 +17,7 @@ class BookEndpoints @Inject()(securedEndpoints: SecuredEndpoints) {
     .tag("Books API")
     .in("books")
 
-  private val baseSecuredBookEndpoint: PartialServerEndpoint[AuthenticatedContext, Unit, AuthError, Unit, Any, Future] = securedEndpoints.securedWithBearer
+  private val baseSecuredBookEndpoint: PartialServerEndpoint[String, AuthenticatedContext, Unit, AuthError, Unit, Any, Future] = securedEndpoints.securedWithBearer
     .tag("Books API")
     .in("books")
 
@@ -26,7 +26,7 @@ class BookEndpoints @Inject()(securedEndpoints: SecuredEndpoints) {
     .in("list" / "all")
     .out(jsonBody[Seq[Book]])
 
-  val addBookEndpoint: PartialServerEndpoint[AuthenticatedContext, Book, AuthError, Unit, Any, Future] = baseSecuredBookEndpoint.post
+  val addBookEndpoint: PartialServerEndpoint[String, AuthenticatedContext, Book, AuthError, Unit, Any, Future] = baseSecuredBookEndpoint.post
     .summary("Add a book")
     .in("add")
     .in(

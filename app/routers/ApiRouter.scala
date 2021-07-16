@@ -1,11 +1,12 @@
 package routers
 
 import akka.stream.Materializer
+
 import javax.inject._
 import models.Book
 import play.api.routing.Router.Routes
 import play.api.routing.SimpleRouter
-import sttp.tapir.server.play._
+import sttp.tapir.server.play.{PlayServerInterpreter, PlayServerOptions}
 import sttp.tapir.swagger.play.SwaggerPlay
 
 import scala.concurrent.ExecutionContext
@@ -19,6 +20,9 @@ class ApiRouter @Inject()(apiController: BookController,
   import apiDocumentation._
   import bookEndpoints._
 
+  private val playServerOptions: PlayServerOptions = PlayServerOptions.default(materializer, ec)
+  private val interpreter = PlayServerInterpreter(playServerOptions)
+
   override def routes: Routes = {
     // Routes are partial functions
     openApiRoute
@@ -27,23 +31,26 @@ class ApiRouter @Inject()(apiController: BookController,
       .orElse(getBookRoute)
   }
 
-  private val booksListingRoute: Routes = booksListingEndpoint
-    .serverLogic(_ => apiController.listBooks())
-    .toRoute
+  private val booksListingRoute: Routes = interpreter.toRoutes(
+    booksListingEndpoint
+      .serverLogic(_ => apiController.listBooks())
+  )
 
-  private val addBookRoute: Routes = addBookEndpoint
-    .serverLogic {
-      case (authenticatedContext: AuthenticatedContext, book: Book) =>
-        println(s"Authenticated with ${authenticatedContext.userId}")
-        apiController.addBook(book)
-    }
-    .toRoute
+  private val addBookRoute: Routes = interpreter.toRoutes(
+    addBookEndpoint
+      .serverLogic {
+        case (authenticatedContext: AuthenticatedContext, book: Book) =>
+          println(s"Authenticated with ${authenticatedContext.userId}")
+          apiController.addBook(book)
+      }
+  )
 
-  private val getBookRoute: Routes = getBookEndpoint
-    .serverLogic(apiController.getBook)
-    .toRoute
+  private val getBookRoute: Routes = interpreter.toRoutes(
+    getBookEndpoint
+      .serverLogic(apiController.getBook)
+  )
 
   // Doc will be on /docs
-  private val openApiRoute: Routes = new SwaggerPlay(openApiYml).routes
+  private val openApiRoute: Routes = new SwaggerPlay(openApiYml)(ec, playServerOptions.defaultActionBuilder).routes
 
 }

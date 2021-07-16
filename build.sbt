@@ -11,7 +11,7 @@ publishTo := Some(Resolver.file("Unused transient repository", file("target/unus
 
 scalaVersion := "2.13.6"
 
-val tapirVersion = "0.17.20"
+val tapirVersion = "0.18.0"
 
 libraryDependencies += guice
 
