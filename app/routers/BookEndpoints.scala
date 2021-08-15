@@ -1,5 +1,8 @@
 package routers
 
+import akka.stream.scaladsl.Source
+import akka.util.ByteString
+
 import javax.inject.{Inject, Singleton}
 import models.{Author, Book}
 import sttp.model.StatusCode
@@ -7,6 +10,7 @@ import sttp.tapir._
 import sttp.tapir.generic.auto._
 import sttp.tapir.json.play._
 import sttp.tapir.server.PartialServerEndpoint
+import sttp.capabilities.akka.AkkaStreams
 
 import scala.concurrent.Future
 
@@ -25,6 +29,13 @@ class BookEndpoints @Inject()(securedEndpoints: SecuredEndpoints) {
     .summary("List all books")
     .in("list" / "all")
     .out(jsonBody[Seq[Book]])
+
+  val booksStreamingEndpoint: PublicEndpoint[Source[ByteString, Any], Unit, Source[ByteString, Any], AkkaStreams] = baseBookEndpoint.post
+    .summary("List all books in streaming")
+    .in("stream" / "all")
+    // Only for testing input streaming, doesn't make much sense otherwise
+    .in(streamTextBody(AkkaStreams)(CodecFormat.Json()))
+    .out(streamTextBody(AkkaStreams)(CodecFormat.Json()))
 
   val addBookEndpoint: PartialServerEndpoint[String, AuthenticatedContext, Book, AuthError, Unit, Any, Future] = baseSecuredBookEndpoint.post
     .summary("Add a book")

@@ -1,13 +1,21 @@
 package routers
 
+import akka.actor.ActorSystem
+import akka.stream.scaladsl.Source
+import akka.util.ByteString
 import models.{Author, Book}
 import org.scalatestplus.play.PlaySpec
-import org.scalatestplus.play.guice.GuiceOneAppPerTest
-import play.api.libs.json.Json
+import org.scalatestplus.play.guice.GuiceOneServerPerTest
+import play.api.libs.json.{JsValue, Json}
+import play.api.libs.ws.WSClient
 import play.api.test.Helpers._
 import play.api.test.{FakeHeaders, FakeRequest, Injecting}
 
-class ApiRouterSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
+class ApiRouterSpec extends PlaySpec with GuiceOneServerPerTest with Injecting {
+
+  implicit private val actorSystem: ActorSystem = ActorSystem("ApiRouterSpec")
+
+  private lazy val wsClient = app.injector.instanceOf[WSClient]
 
   "ApiRouter" should {
 
@@ -25,6 +33,29 @@ class ApiRouterSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
             |{"title":"The Colour of Magic","year":1983,"author":{"name":"Terry Pratchett"}},
             |{"title":"The Art of Computer Programming","year":1968,"author":{"name":"Donald Knuth"}},
             |{"title":"Pharaoh","year":1897,"author":{"name":"Boleslaw Prus"}}
+            |]""".stripMargin)
+    }
+
+    "stream the books" in {
+      val inputData: Source[ByteString, Any] = Source(
+        Seq(
+          """{"title":"The Sorrows of Young Werther","year":1774,"author":{"name":"Johann Wolfgang von Goethe"}}""",
+          """{"title":"Iliad","year":-8000,"author":{"name":"Homer"}}""",
+          """{"title":"Nad Niemnem","year":1888,"author":{"name":"Eliza Orzeszkowa"}}"""
+        )
+      )
+        .map(str => ByteString(str))
+
+      val books = await(wsClient.url(s"http://localhost:$port/books/stream/all").post(inputData))
+
+      books.status mustBe OK
+      books.contentType mustBe "application/json"
+      books.body[JsValue] mustEqual
+        Json.parse(
+          """[
+            |{"title":"The Sorrows of Young Werther","year":1774,"author":{"name":"Johann Wolfgang von Goethe"}},
+            |{"title":"Iliad","year":-8000,"author":{"name":"Homer"}},
+            |{"title":"Nad Niemnem","year":1888,"author":{"name":"Eliza Orzeszkowa"}}
             |]""".stripMargin)
     }
 
