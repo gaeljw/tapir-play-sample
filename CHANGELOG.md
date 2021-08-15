@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.1 (2021-08-15)
+
+- Update Tapir to 0.18.3
+
 ## 0.6.0 (2021-07-16)
 
 - Update Tapir to 0.18.0
