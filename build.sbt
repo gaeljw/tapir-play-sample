@@ -11,7 +11,7 @@ publishTo := Some(Resolver.file("Unused transient repository", file("target/unus
 
 scalaVersion := "2.13.6"
 
-val tapirVersion = "0.19.0-M4"
+val tapirVersion = "0.19.0-M5"
 
 libraryDependencies += guice
 
@@ -28,7 +28,7 @@ libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-openapi-circe-yam
 
 // Swagger UI for Play
 // You can also host Swagger UI by yourself and get rid of this dependency
-libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-play" % tapirVersion
+libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui" % tapirVersion
 
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
 
