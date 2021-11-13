@@ -38,9 +38,11 @@ class ApiRouter @Inject()(apiController: BookController,
   private val addBookRoute: Routes = interpreter.toRoutes(
     addBookEndpoint
       .serverLogic {
-        case (authenticatedContext: AuthenticatedContext, book: Book) =>
-          println(s"Authenticated with ${authenticatedContext.userId}")
-          apiController.addBook(book)
+        (authenticatedContext: AuthenticatedContext) =>
+          (book: Book) => {
+            println(s"Authenticated with ${authenticatedContext.userId}")
+            apiController.addBook(book)
+          }
       }
   )
 

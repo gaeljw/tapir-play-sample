@@ -12,12 +12,12 @@ import scala.concurrent.Future
 @Singleton
 class SecuredEndpoints @Inject()(tokenAuthenticator: TokenAuthenticator) {
 
-  private val securedWithBearerEndpoint: Endpoint[String, AuthError, Unit, Any] = endpoint
-    .in(auth.bearer[String]())
+  private val securedWithBearerEndpoint: Endpoint[String, Unit, AuthError, Unit, Any] = endpoint
+    .securityIn(auth.bearer[String]())
     .errorOut(statusCode(StatusCode.Unauthorized))
     .errorOut(jsonBody[AuthError])
 
   val securedWithBearer: PartialServerEndpoint[String, AuthenticatedContext, Unit, AuthError, Unit, Any, Future] = securedWithBearerEndpoint
-    .serverLogicForCurrent(tokenAuthenticator.authenticateToken)
+    .serverSecurityLogic(tokenAuthenticator.authenticateToken)
 
 }
