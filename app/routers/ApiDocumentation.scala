@@ -6,7 +6,7 @@ import sttp.tapir.openapi.{Info, OpenAPI}
 import sttp.tapir.openapi.circe.yaml._
 
 @Singleton
-class ApiDocumentation @Inject()(bookEndpoints: BookEndpoints) {
+class ApiDocumentation @Inject() (bookEndpoints: BookEndpoints) {
 
   import bookEndpoints._
 

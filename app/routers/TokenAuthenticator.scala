@@ -14,7 +14,7 @@ object AuthError {
 case class AuthenticatedContext(userId: String)
 
 @Singleton
-class TokenAuthenticator @Inject()()(implicit ec: ExecutionContext) {
+class TokenAuthenticator @Inject() ()(implicit ec: ExecutionContext) {
 
   def authenticateToken(bearer: String): Future[Either[AuthError, AuthenticatedContext]] = {
     Future {

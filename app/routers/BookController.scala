@@ -10,9 +10,8 @@ import repositories.BookRepository
 import javax.inject._
 import scala.concurrent.{ExecutionContext, Future}
 
-
 @Singleton
-class BookController @Inject()(bookRepository: BookRepository)(implicit mat: Materializer, ec: ExecutionContext) {
+class BookController @Inject() (bookRepository: BookRepository)(implicit mat: Materializer, ec: ExecutionContext) {
 
   def listBooks(): Future[Either[Unit, Seq[Book]]] = {
     Future.successful(Right(bookRepository.getBooks()))
@@ -39,7 +38,8 @@ class BookController @Inject()(bookRepository: BookRepository)(implicit mat: Mat
 
   def getBook(title: String): Future[Either[String, Book]] = {
     Future.successful {
-      bookRepository.getBooks()
+      bookRepository
+        .getBooks()
         .find(_.title == title)
         .toRight(s"No book with exact title $title")
     }

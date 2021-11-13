@@ -10,7 +10,7 @@ import sttp.tapir.server.PartialServerEndpoint
 import scala.concurrent.Future
 
 @Singleton
-class SecuredEndpoints @Inject()(tokenAuthenticator: TokenAuthenticator) {
+class SecuredEndpoints @Inject() (tokenAuthenticator: TokenAuthenticator) {
 
   private val securedWithBearerEndpoint: Endpoint[String, Unit, AuthError, Unit, Any] = endpoint
     .securityIn(auth.bearer[String]())

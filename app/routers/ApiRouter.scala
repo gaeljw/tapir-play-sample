@@ -11,10 +11,10 @@ import javax.inject._
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ApiRouter @Inject()(apiController: BookController,
-                          apiDocumentation: ApiDocumentation,
-                          bookEndpoints: BookEndpoints)
-                         (implicit val materializer: Materializer, ec: ExecutionContext) extends SimpleRouter {
+class ApiRouter @Inject() (apiController: BookController, apiDocumentation: ApiDocumentation, bookEndpoints: BookEndpoints)(implicit
+    val materializer: Materializer,
+    ec: ExecutionContext
+) extends SimpleRouter {
 
   import apiDocumentation._
   import bookEndpoints._
@@ -36,16 +36,16 @@ class ApiRouter @Inject()(apiController: BookController,
       .serverLogic(_ => apiController.listBooks())
   )
 
-  private val booksStreamingRoute: Routes = interpreter.toRoutes(booksStreamingEndpoint.serverLogic(inputSource => apiController.streamBooks(inputSource)))
+  private val booksStreamingRoute: Routes =
+    interpreter.toRoutes(booksStreamingEndpoint.serverLogic(inputSource => apiController.streamBooks(inputSource)))
 
   private val addBookRoute: Routes = interpreter.toRoutes(
     addBookEndpoint
-      .serverLogic {
-        (authenticatedContext: AuthenticatedContext) =>
-          (book: Book) => {
-            println(s"Authenticated with ${authenticatedContext.userId}")
-            apiController.addBook(book)
-          }
+      .serverLogic { (authenticatedContext: AuthenticatedContext) => (book: Book) =>
+        {
+          println(s"Authenticated with ${authenticatedContext.userId}")
+          apiController.addBook(book)
+        }
       }
   )
 

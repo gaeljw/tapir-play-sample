@@ -25,8 +25,7 @@ class ApiRouterSpec extends PlaySpec with GuiceOneServerPerTest with Injecting {
       status(books) mustBe OK
       contentType(books) mustBe Some("application/json")
       contentAsJson(books) mustEqual
-        Json.parse(
-          """[
+        Json.parse("""[
             |{"title":"The Sorrows of Young Werther","year":1774,"author":{"name":"Johann Wolfgang von Goethe"}},
             |{"title":"Iliad","year":-8000,"author":{"name":"Homer"}},
             |{"title":"Nad Niemnem","year":1888,"author":{"name":"Eliza Orzeszkowa"}},
@@ -51,8 +50,7 @@ class ApiRouterSpec extends PlaySpec with GuiceOneServerPerTest with Injecting {
       books.status mustBe OK
       books.contentType mustBe "application/json"
       books.body[JsValue] mustEqual
-        Json.parse(
-          """[
+        Json.parse("""[
             |{"title":"The Sorrows of Young Werther","year":1774,"author":{"name":"Johann Wolfgang von Goethe"}},
             |{"title":"Iliad","year":-8000,"author":{"name":"Homer"}},
             |{"title":"Nad Niemnem","year":1888,"author":{"name":"Eliza Orzeszkowa"}}
@@ -62,7 +60,10 @@ class ApiRouterSpec extends PlaySpec with GuiceOneServerPerTest with Injecting {
     "add a book with valid authentication" in {
       val book = Book("A new book", 2020, Author("John Doe"))
 
-      val added = route(app, FakeRequest(POST, "/books/add", FakeHeaders(Seq("Authorization" -> "Bearer SecretKey")), Json.toJson(book).toString())).get
+      val added = route(
+        app,
+        FakeRequest(POST, "/books/add", FakeHeaders(Seq("Authorization" -> "Bearer SecretKey")), Json.toJson(book).toString())
+      ).get
 
       status(added) mustBe CREATED
     }
@@ -70,7 +71,8 @@ class ApiRouterSpec extends PlaySpec with GuiceOneServerPerTest with Injecting {
     "add a book with invalid authentication" in {
       val book = Book("A new book", 2020, Author("John Doe"))
 
-      val added = route(app, FakeRequest(POST, "/books/add", FakeHeaders(Seq("Authorization" -> "Bearer BadKey")), Json.toJson(book).toString())).get
+      val added =
+        route(app, FakeRequest(POST, "/books/add", FakeHeaders(Seq("Authorization" -> "Bearer BadKey")), Json.toJson(book).toString())).get
 
       status(added) mustBe UNAUTHORIZED
     }
