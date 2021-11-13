@@ -1,15 +1,14 @@
 package routers
 
 import akka.stream.Materializer
-
-import javax.inject._
 import models.Book
 import play.api.routing.Router.Routes
 import play.api.routing.SimpleRouter
 import sttp.tapir.server.play.{PlayServerInterpreter, PlayServerOptions}
-import sttp.tapir.swagger.play.SwaggerPlay
+import sttp.tapir.swagger.SwaggerUI
 
-import scala.concurrent.ExecutionContext
+import javax.inject._
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class ApiRouter @Inject()(apiController: BookController,
@@ -39,9 +38,11 @@ class ApiRouter @Inject()(apiController: BookController,
   private val addBookRoute: Routes = interpreter.toRoutes(
     addBookEndpoint
       .serverLogic {
-        case (authenticatedContext: AuthenticatedContext, book: Book) =>
-          println(s"Authenticated with ${authenticatedContext.userId}")
-          apiController.addBook(book)
+        (authenticatedContext: AuthenticatedContext) =>
+          (book: Book) => {
+            println(s"Authenticated with ${authenticatedContext.userId}")
+            apiController.addBook(book)
+          }
       }
   )
 
@@ -51,6 +52,6 @@ class ApiRouter @Inject()(apiController: BookController,
   )
 
   // Doc will be on /docs
-  private val openApiRoute: Routes = new SwaggerPlay(openApiYml)(ec, playServerOptions.defaultActionBuilder).routes
+  private val openApiRoute: Routes = interpreter.toRoutes(SwaggerUI[Future](openApiYml))
 
 }

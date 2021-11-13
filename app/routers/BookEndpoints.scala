@@ -21,7 +21,7 @@ class BookEndpoints @Inject()(securedEndpoints: SecuredEndpoints) {
     .tag("Books API")
     .in("books")
 
-  val booksListingEndpoint: Endpoint[Unit, Unit, Seq[Book], Any] = baseBookEndpoint.get
+  val booksListingEndpoint: PublicEndpoint[Unit, Unit, Seq[Book], Any] = baseBookEndpoint.get
     .summary("List all books")
     .in("list" / "all")
     .out(jsonBody[Seq[Book]])
@@ -36,7 +36,7 @@ class BookEndpoints @Inject()(securedEndpoints: SecuredEndpoints) {
     )
     .out(statusCode(StatusCode.Created))
 
-  val getBookEndpoint: Endpoint[String, String, Book, Any] = baseBookEndpoint.get
+  val getBookEndpoint: PublicEndpoint[String, String, Book, Any] = baseBookEndpoint.get
     .summary("Get a book (by title)")
     .in("find")
     .in(
