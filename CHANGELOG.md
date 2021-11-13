@@ -3,6 +3,7 @@
 ## 0.7.0 (2021-11-13)
 
 - Update Tapir to 0.19.0-M16
+- Add streaming example
 
 ## 0.6.1 (2021-08-15)
 

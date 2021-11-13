@@ -1,17 +1,36 @@
 package routers
 
-import javax.inject._
+import akka.stream.Materializer
+import akka.stream.scaladsl.{Sink, Source}
+import akka.util.ByteString
 import models.Book
+import play.api.libs.json.Json
 import repositories.BookRepository
 
-import scala.concurrent.Future
+import javax.inject._
+import scala.concurrent.{ExecutionContext, Future}
 
 
 @Singleton
-class BookController @Inject()(bookRepository: BookRepository) {
+class BookController @Inject()(bookRepository: BookRepository)(implicit mat: Materializer, ec: ExecutionContext) {
 
   def listBooks(): Future[Either[Unit, Seq[Book]]] = {
     Future.successful(Right(bookRepository.getBooks()))
+  }
+
+  def streamBooks(inputSource: Source[ByteString, Any]): Future[Either[Unit, Source[ByteString, Any]]] = {
+    val inputBooks = inputSource
+      .map(bs => bs.decodeString("UTF-8"))
+      .map(str => Json.parse(str).as[Book])
+      .runWith(Sink.seq)
+
+    inputBooks.map { books =>
+      val source = Source(books)
+        .map(b => Json.toJson(b).toString())
+        .intersperse("[", ", ", "]")
+        .map(str => ByteString(str))
+      Right(source)
+    }
   }
 
   def addBook(book: Book): Future[Either[AuthError, Unit]] = {
