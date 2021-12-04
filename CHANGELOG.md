@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.0
+
+- Update Tapir to 0.19.1
+
 ## 0.7.0 (2021-11-13)
 
 - Update Tapir to 0.19.0-M16
