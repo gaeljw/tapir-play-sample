@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.0
+
+- Update Tapir to 0.20.1
+
 ## 0.8.0
 
 - Update Tapir to 0.19.1
