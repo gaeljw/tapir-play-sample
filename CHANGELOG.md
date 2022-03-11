@@ -4,6 +4,7 @@
 
 - Update Tapir to 0.20.1
 - Update com.softwaremill.sttp.shared:akka to 1.3.2
+- Update Scala to 2.13.8
 
 ## 0.8.0
 
