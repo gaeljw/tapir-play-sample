@@ -9,9 +9,9 @@ lazy val root = (project in file("."))
 
 publishTo := Some(Resolver.file("Unused transient repository", file("target/unusedrepo")))
 
-scalaVersion := "2.13.6"
+scalaVersion := "2.13.8"
 
-val tapirVersion = "0.19.1"
+val tapirVersion = "0.20.1"
 
 libraryDependencies += guice
 
@@ -33,7 +33,7 @@ libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui" % tap
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
 
 // For Akka Streams (if using streaming)
-libraryDependencies += "com.softwaremill.sttp.shared" %% "akka" % "1.2.5"
+libraryDependencies += "com.softwaremill.sttp.shared" %% "akka" % "1.3.2"
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.github.gaeljw.controllers._"
