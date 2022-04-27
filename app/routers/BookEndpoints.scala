@@ -35,7 +35,7 @@ class BookEndpoints @Inject()(securedEndpoints: SecuredEndpoints) {
     .in("stream" / "all")
     // Only for testing input streaming, doesn't make much sense otherwise
     .in(streamTextBody(AkkaStreams)(CodecFormat.Json()))
-    .out(streamTextBody(AkkaStreams)(CodecFormat.Json()))
+    .out(streamBody(AkkaStreams)(implicitly[Schema[Book]].asArray, CodecFormat.Json()))
 
   val oneOfStreamingEndpoint: PublicEndpoint[String, Unit, Source[ByteString, Any], AkkaStreams] = baseBookEndpoint
     .get
@@ -47,7 +47,9 @@ class BookEndpoints @Inject()(securedEndpoints: SecuredEndpoints) {
     )
     .out(
       oneOfBody(
-        streamTextBody(AkkaStreams)(CodecFormat.Json()).toEndpointIO,
+        // Order is important: 1st one will be the default if no Accept header provided
+        // It should match server implementation behavior as well
+        streamBody(AkkaStreams)(implicitly[Schema[Book]].asArray, CodecFormat.Json()).toEndpointIO,
         streamTextBody(AkkaStreams)(CodecFormat.TextPlain()).toEndpointIO
       )
     )
