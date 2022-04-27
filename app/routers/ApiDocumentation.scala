@@ -15,6 +15,7 @@ class ApiDocumentation @Inject() (bookEndpoints: BookEndpoints) {
   private val openApiDocs: OpenAPI = OpenAPIDocsInterpreter().toOpenAPI(
     List(
       booksListingEndpoint,
+      booksStreamingEndpoint,
       addBookEndpoint.endpoint, // This one is a PartialServerEndpoint
       getBookEndpoint
     ),
