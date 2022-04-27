@@ -29,6 +29,7 @@ And go to http://localhost:9000/docs/.
   - Reading input authentication headers and shared authentication logic
   - Sending output body and errors
   - Streaming request/response
+    - With multiple formats for output
 - Swagger Documentation, see `ApiDocumentation` 
 
 ## Takeaway

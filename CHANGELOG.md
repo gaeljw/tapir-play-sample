@@ -3,6 +3,7 @@
 ## 0.10.0
 
 - Update Tapir to 1.0.0-M8
+- Add example of streaming output with multiple possible formats
 
 ## 0.9.0
 

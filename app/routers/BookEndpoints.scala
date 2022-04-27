@@ -2,20 +2,19 @@ package routers
 
 import akka.stream.scaladsl.Source
 import akka.util.ByteString
-
-import javax.inject.{Inject, Singleton}
 import models.{Author, Book}
+import sttp.capabilities.akka.AkkaStreams
 import sttp.model.StatusCode
 import sttp.tapir._
 import sttp.tapir.generic.auto._
 import sttp.tapir.json.play._
 import sttp.tapir.server.PartialServerEndpoint
-import sttp.capabilities.akka.AkkaStreams
 
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class BookEndpoints @Inject() (securedEndpoints: SecuredEndpoints) {
+class BookEndpoints @Inject()(securedEndpoints: SecuredEndpoints) {
 
   private val baseBookEndpoint = endpoint
     .tag("Books API")
@@ -37,6 +36,21 @@ class BookEndpoints @Inject() (securedEndpoints: SecuredEndpoints) {
     // Only for testing input streaming, doesn't make much sense otherwise
     .in(streamTextBody(AkkaStreams)(CodecFormat.Json()))
     .out(streamTextBody(AkkaStreams)(CodecFormat.Json()))
+
+  val oneOfStreamingEndpoint: PublicEndpoint[String, Unit, Source[ByteString, Any], AkkaStreams] = baseBookEndpoint
+    .get
+    .summary("List all books in streaming with format defined by Accept header")
+    .in("stream" / "formatted")
+    .in(
+      // Hide the header in OpenApi doc as it's already automatically provided due to the response Content-Type choices
+      header[String]("Accept").schema(_.hidden(true))
+    )
+    .out(
+      oneOfBody(
+        streamTextBody(AkkaStreams)(CodecFormat.Json()).toEndpointIO,
+        streamTextBody(AkkaStreams)(CodecFormat.TextPlain()).toEndpointIO
+      )
+    )
 
   val addBookEndpoint: PartialServerEndpoint[String, AuthenticatedContext, Book, AuthError, Unit, Any, Future] =
     baseSecuredBookEndpoint.post

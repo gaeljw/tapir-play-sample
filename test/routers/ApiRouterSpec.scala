@@ -25,7 +25,8 @@ class ApiRouterSpec extends PlaySpec with GuiceOneServerPerTest with Injecting {
       status(books) mustBe OK
       contentType(books) mustBe Some("application/json")
       contentAsJson(books) mustEqual
-        Json.parse("""[
+        Json.parse(
+          """[
             |{"title":"The Sorrows of Young Werther","year":1774,"author":{"name":"Johann Wolfgang von Goethe"}},
             |{"title":"Iliad","year":-8000,"author":{"name":"Homer"}},
             |{"title":"Nad Niemnem","year":1888,"author":{"name":"Eliza Orzeszkowa"}},
@@ -50,11 +51,45 @@ class ApiRouterSpec extends PlaySpec with GuiceOneServerPerTest with Injecting {
       books.status mustBe OK
       books.contentType mustBe "application/json"
       books.body[JsValue] mustEqual
-        Json.parse("""[
+        Json.parse(
+          """[
             |{"title":"The Sorrows of Young Werther","year":1774,"author":{"name":"Johann Wolfgang von Goethe"}},
             |{"title":"Iliad","year":-8000,"author":{"name":"Homer"}},
             |{"title":"Nad Niemnem","year":1888,"author":{"name":"Eliza Orzeszkowa"}}
             |]""".stripMargin)
+    }
+
+    "stream the books depending on the requested format - JSON" in {
+      val books = route(app, FakeRequest(GET, "/books/stream/formatted").withHeaders("Accept" -> "application/json")).get
+
+      status(books) mustBe OK
+      contentType(books) mustBe Some("application/json")
+      contentAsJson(books) mustEqual
+        Json.parse(
+          """[
+            |{"title":"The Sorrows of Young Werther","year":1774,"author":{"name":"Johann Wolfgang von Goethe"}},
+            |{"title":"Iliad","year":-8000,"author":{"name":"Homer"}},
+            |{"title":"Nad Niemnem","year":1888,"author":{"name":"Eliza Orzeszkowa"}},
+            |{"title":"The Colour of Magic","year":1983,"author":{"name":"Terry Pratchett"}},
+            |{"title":"The Art of Computer Programming","year":1968,"author":{"name":"Donald Knuth"}},
+            |{"title":"Pharaoh","year":1897,"author":{"name":"Boleslaw Prus"}}
+            |]""".stripMargin)
+
+    }
+
+    "stream the books depending on the requested format - Text" in {
+      val books = route(app, FakeRequest(GET, "/books/stream/formatted").withHeaders("Accept" -> "text/plain")).get
+
+      status(books) mustBe OK
+      contentType(books) mustBe Some("text/plain")
+      contentAsString(books) mustEqual
+        """title=The Sorrows of Young Werther;year=1774
+          |title=Iliad;year=-8000
+          |title=Nad Niemnem;year=1888
+          |title=The Colour of Magic;year=1983
+          |title=The Art of Computer Programming;year=1968
+          |title=Pharaoh;year=1897""".stripMargin
+
     }
 
     "add a book with valid authentication" in {

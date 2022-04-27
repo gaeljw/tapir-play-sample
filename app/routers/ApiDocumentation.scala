@@ -16,6 +16,7 @@ class ApiDocumentation @Inject() (bookEndpoints: BookEndpoints) {
     List(
       booksListingEndpoint,
       booksStreamingEndpoint,
+      oneOfStreamingEndpoint,
       addBookEndpoint.endpoint, // This one is a PartialServerEndpoint
       getBookEndpoint
     ),

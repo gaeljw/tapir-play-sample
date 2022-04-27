@@ -27,6 +27,7 @@ class ApiRouter @Inject() (apiController: BookController, apiDocumentation: ApiD
     openApiRoute
       .orElse(booksListingRoute)
       .orElse(booksStreamingRoute)
+      .orElse(oneOfStreamingRoute)
       .orElse(addBookRoute)
       .orElse(getBookRoute)
   }
@@ -38,6 +39,9 @@ class ApiRouter @Inject() (apiController: BookController, apiDocumentation: ApiD
 
   private val booksStreamingRoute: Routes =
     interpreter.toRoutes(booksStreamingEndpoint.serverLogic(inputSource => apiController.streamBooks(inputSource)))
+
+  private val oneOfStreamingRoute: Routes =
+    interpreter.toRoutes(oneOfStreamingEndpoint.serverLogic(acceptHeader => apiController.listBooksInStreaming(acceptHeader)))
 
   private val addBookRoute: Routes = interpreter.toRoutes(
     addBookEndpoint
