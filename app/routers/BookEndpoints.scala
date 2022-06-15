@@ -14,7 +14,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
-class BookEndpoints @Inject()(securedEndpoints: SecuredEndpoints) {
+class BookEndpoints @Inject() (securedEndpoints: SecuredEndpoints) {
 
   private val baseBookEndpoint = endpoint
     .tag("Books API")
@@ -37,8 +37,7 @@ class BookEndpoints @Inject()(securedEndpoints: SecuredEndpoints) {
     .in(streamTextBody(AkkaStreams)(CodecFormat.Json()))
     .out(streamBody(AkkaStreams)(implicitly[Schema[Book]].asArray, CodecFormat.Json()))
 
-  val oneOfStreamingEndpoint: PublicEndpoint[String, Unit, Source[ByteString, Any], AkkaStreams] = baseBookEndpoint
-    .get
+  val oneOfStreamingEndpoint: PublicEndpoint[String, Unit, Source[ByteString, Any], AkkaStreams] = baseBookEndpoint.get
     .summary("List all books in streaming with format defined by Accept header")
     .in("stream" / "formatted")
     .in(
