@@ -3,6 +3,7 @@
 ## 0.11.0
 
 - Update Tapir to 1.0.0
+- Update Play to 2.8.16
 - Update com.softwaremill.sttp.shared:akka to 1.3.6
 - Update sbt to 1.6.2
 
