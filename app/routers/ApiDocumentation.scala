@@ -1,9 +1,9 @@
 package routers
 
 import javax.inject.{Inject, Singleton}
+import sttp.apispec.openapi.circe.yaml._
+import sttp.apispec.openapi.{Info, OpenAPI}
 import sttp.tapir.docs.openapi._
-import sttp.tapir.openapi.{Info, OpenAPI}
-import sttp.tapir.openapi.circe.yaml._
 
 @Singleton
 class ApiDocumentation @Inject() (bookEndpoints: BookEndpoints) {

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.11.0
+
+- Update Tapir to 1.0.0
+- Update com.softwaremill.sttp.shared:akka to 1.3.6
+
 ## 0.10.0
 
 - Update Tapir to 1.0.0-M8
