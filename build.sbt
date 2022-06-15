@@ -11,7 +11,7 @@ publishTo := Some(Resolver.file("Unused transient repository", file("target/unus
 
 scalaVersion := "2.13.8"
 
-val tapirVersion = "1.0.0-M8"
+val tapirVersion = "1.0.0"
 
 libraryDependencies += guice
 
@@ -24,7 +24,7 @@ libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-json-play" % tapi
 
 // Tapir OpenAPI
 libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-openapi-docs" % tapirVersion
-libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-openapi-circe-yaml" % tapirVersion
+libraryDependencies += "com.softwaremill.sttp.apispec" %% "openapi-circe-yaml" % "0.2.1"
 
 // Swagger UI for Play
 // You can also host Swagger UI by yourself and get rid of this dependency
@@ -33,7 +33,7 @@ libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui" % tap
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
 
 // For Akka Streams (if using streaming)
-libraryDependencies += "com.softwaremill.sttp.shared" %% "akka" % "1.3.4"
+libraryDependencies += "com.softwaremill.sttp.shared" %% "akka" % "1.3.6"
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.github.gaeljw.controllers._"

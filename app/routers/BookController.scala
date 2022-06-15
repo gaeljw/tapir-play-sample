@@ -12,7 +12,7 @@ import javax.inject._
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class BookController @Inject()(bookRepository: BookRepository)(implicit mat: Materializer, ec: ExecutionContext) {
+class BookController @Inject() (bookRepository: BookRepository)(implicit mat: Materializer, ec: ExecutionContext) {
 
   def listBooks(): Future[Either[Unit, Seq[Book]]] = {
     Future.successful(Right(bookRepository.getBooks()))
