@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.12.0
+
+- Update sbt to 1.8.0
+- Update Tapir to 1.2.4 & openapi-circe-yaml to 0.3.1
+- Update com.softwaremill.sttp.shared:akka to 1.3.12
+- Update Play to 2.8.18
+
 ## 0.11.0
 
 - Update Tapir to 1.0.0

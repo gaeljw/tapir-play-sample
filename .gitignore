@@ -2,3 +2,5 @@
 .idea
 logs
 /.bsp/sbt.json
+.metals/
+.vscode/
