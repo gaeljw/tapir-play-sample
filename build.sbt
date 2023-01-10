@@ -24,7 +24,7 @@ libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-json-play" % tapi
 
 // Tapir OpenAPI
 libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-openapi-docs" % tapirVersion
-libraryDependencies += "com.softwaremill.sttp.apispec" %% "openapi-circe-yaml" % "0.3.1"
+libraryDependencies += "com.softwaremill.sttp.apispec" %% "openapi-circe-yaml" % "0.3.2"
 
 // Swagger UI for Play
 // You can also host Swagger UI by yourself and get rid of this dependency
