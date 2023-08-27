@@ -59,6 +59,6 @@ class ApiRouter @Inject() (apiController: BookController, apiDocumentation: ApiD
   )
 
   // Doc will be on /docs
-  private val openApiRoute: Routes = interpreter.toRoutes(SwaggerUI[Future](openApiYml))
+  private val openApiRoute: Routes = interpreter.toRoutes(openApiEndpoints)
 
 }
