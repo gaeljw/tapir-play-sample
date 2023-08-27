@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.13.0
+
+- Simplify Swagger UI integration
+
+- Update sbt to 1.9.4
+- Update Tapir to 1.7.6
+- Update com.softwaremill.sttp.shared:akka to 1.3.16
+- Update Play to 2.8.20
+
 ## 0.12.0
 
 - Update sbt to 1.8.0
