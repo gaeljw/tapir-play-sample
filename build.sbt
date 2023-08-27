@@ -24,11 +24,10 @@ libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-json-play" % tapi
 
 // Tapir OpenAPI
 libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-openapi-docs" % tapirVersion
-libraryDependencies += "com.softwaremill.sttp.apispec" %% "openapi-circe-yaml" % "0.4.0"
 
-// Swagger UI for Play
-// You can also host Swagger UI by yourself and get rid of this dependency
-libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui" % tapirVersion
+// Swagger UI
+// You can also host Swagger UI by yourself and get rid of this dependency with more manual setup
+libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle" % tapirVersion
 
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
 
