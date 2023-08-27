@@ -11,7 +11,7 @@ publishTo := Some(Resolver.file("Unused transient repository", file("target/unus
 
 scalaVersion := "2.13.11"
 
-val tapirVersion = "1.6.0"
+val tapirVersion = "1.7.3"
 
 libraryDependencies += guice
 
@@ -32,7 +32,7 @@ libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
 
 // For Akka Streams (if using streaming)
-libraryDependencies += "com.softwaremill.sttp.shared" %% "akka" % "1.3.15"
+libraryDependencies += "com.softwaremill.sttp.shared" %% "akka" % "1.3.16"
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.github.gaeljw.controllers._"
