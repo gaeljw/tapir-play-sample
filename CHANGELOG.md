@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.17.0
+
+- Enrich the streaming formatted example with handling of complex `Accept` headers
+
 ## 0.16.0
 
 - Upgrade to Scala 3.3
