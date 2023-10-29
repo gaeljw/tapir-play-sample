@@ -4,6 +4,7 @@
 
 - Upgrade Play to 3.0.0 (with Pekko instead of Akka)
 - Upgrade Tapir to 1.8.3
+- Upgrade scalatestplus-play to 7.0.0
 
 ## 0.14.1
 
