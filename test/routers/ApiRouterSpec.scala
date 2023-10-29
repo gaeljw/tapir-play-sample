@@ -95,6 +95,54 @@ class ApiRouterSpec
 
     }
 
+    "stream the books depending on the requested format - JSON because of preference order" in {
+      val books = route(app, FakeRequest(GET, "/books/stream/formatted").withHeaders("Accept" -> "application/json,text/plain")).get
+
+      status(books) mustBe OK
+      contentType(books) mustBe Some("application/json")
+      contentAsJson(books) mustEqual
+        Json.parse("""[
+            |{"title":"The Sorrows of Young Werther","year":1774,"author":{"name":"Johann Wolfgang von Goethe"}},
+            |{"title":"Iliad","year":-8000,"author":{"name":"Homer"}},
+            |{"title":"Nad Niemnem","year":1888,"author":{"name":"Eliza Orzeszkowa"}},
+            |{"title":"The Colour of Magic","year":1983,"author":{"name":"Terry Pratchett"}},
+            |{"title":"The Art of Computer Programming","year":1968,"author":{"name":"Donald Knuth"}},
+            |{"title":"Pharaoh","year":1897,"author":{"name":"Boleslaw Prus"}}
+            |]""".stripMargin)
+
+    }
+
+    "stream the books depending on the requested format - Text because of weight in header" in {
+      val books = route(app, FakeRequest(GET, "/books/stream/formatted").withHeaders("Accept" -> "application/json;q=0.9,text/plain")).get
+
+      status(books) mustBe OK
+      contentType(books) mustBe Some("text/plain")
+      contentAsString(books) mustEqual
+        """title=The Sorrows of Young Werther;year=1774
+          |title=Iliad;year=-8000
+          |title=Nad Niemnem;year=1888
+          |title=The Colour of Magic;year=1983
+          |title=The Art of Computer Programming;year=1968
+          |title=Pharaoh;year=1897""".stripMargin
+    }
+
+    "stream the books depending on the requested format - JSON because of preference in code" in {
+      val books = route(app, FakeRequest(GET, "/books/stream/formatted").withHeaders("Accept" -> "")).get
+
+      status(books) mustBe OK
+      contentType(books) mustBe Some("application/json")
+      contentAsJson(books) mustEqual
+        Json.parse("""[
+            |{"title":"The Sorrows of Young Werther","year":1774,"author":{"name":"Johann Wolfgang von Goethe"}},
+            |{"title":"Iliad","year":-8000,"author":{"name":"Homer"}},
+            |{"title":"Nad Niemnem","year":1888,"author":{"name":"Eliza Orzeszkowa"}},
+            |{"title":"The Colour of Magic","year":1983,"author":{"name":"Terry Pratchett"}},
+            |{"title":"The Art of Computer Programming","year":1968,"author":{"name":"Donald Knuth"}},
+            |{"title":"Pharaoh","year":1897,"author":{"name":"Boleslaw Prus"}}
+            |]""".stripMargin)
+
+    }
+
     "add a book with valid authentication" in {
       val book = Book("A new book", 2020, Author("John Doe"))
 
