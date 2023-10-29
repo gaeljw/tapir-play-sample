@@ -7,11 +7,17 @@ import org.apache.pekko.util.ByteString
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneServerPerTest
 import play.api.libs.json.{JsValue, Json}
-import play.api.libs.ws.WSClient
-import play.api.test.Helpers._
+import play.api.libs.ws.{DefaultBodyReadables, DefaultBodyWritables, JsonBodyReadables, WSClient}
+import play.api.test.Helpers.*
 import play.api.test.{FakeHeaders, FakeRequest, Injecting}
 
-class ApiRouterSpec extends PlaySpec with GuiceOneServerPerTest with Injecting {
+class ApiRouterSpec
+    extends PlaySpec
+    with GuiceOneServerPerTest
+    with Injecting
+    with DefaultBodyReadables
+    with DefaultBodyWritables
+    with JsonBodyReadables {
 
   implicit private val actorSystem: ActorSystem = ActorSystem("ApiRouterSpec")
 
