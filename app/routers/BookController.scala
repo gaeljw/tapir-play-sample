@@ -1,9 +1,9 @@
 package routers
 
-import akka.stream.Materializer
-import akka.stream.scaladsl.{Sink, Source}
-import akka.util.ByteString
 import models.Book
+import org.apache.pekko.stream.Materializer
+import org.apache.pekko.stream.scaladsl.{Sink, Source}
+import org.apache.pekko.util.ByteString
 import play.api.libs.json.Json
 import repositories.BookRepository
 import sttp.model.MediaType

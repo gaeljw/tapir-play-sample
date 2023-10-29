@@ -1,7 +1,7 @@
 package routers
 
-import akka.stream.Materializer
 import models.Book
+import org.apache.pekko.stream.Materializer
 import play.api.routing.Router.Routes
 import play.api.routing.SimpleRouter
 import sttp.tapir.server.play.{PlayServerInterpreter, PlayServerOptions}

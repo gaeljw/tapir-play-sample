@@ -1,9 +1,9 @@
 package routers
 
-import akka.stream.scaladsl.Source
-import akka.util.ByteString
 import models.{Author, Book}
-import sttp.capabilities.akka.AkkaStreams
+import org.apache.pekko.stream.scaladsl.Source
+import org.apache.pekko.util.ByteString
+import sttp.capabilities.pekko.PekkoStreams
 import sttp.model.StatusCode
 import sttp.tapir._
 import sttp.tapir.generic.auto._
@@ -30,14 +30,14 @@ class BookEndpoints @Inject() (securedEndpoints: SecuredEndpoints) {
     .in("list" / "all")
     .out(jsonBody[Seq[Book]])
 
-  val booksStreamingEndpoint: PublicEndpoint[Source[ByteString, Any], Unit, Source[ByteString, Any], AkkaStreams] = baseBookEndpoint.post
+  val booksStreamingEndpoint: PublicEndpoint[Source[ByteString, Any], Unit, Source[ByteString, Any], PekkoStreams] = baseBookEndpoint.post
     .summary("List all books in streaming")
     .in("stream" / "all")
     // Only for testing input streaming, doesn't make much sense otherwise
-    .in(streamTextBody(AkkaStreams)(CodecFormat.Json()))
-    .out(streamBody(AkkaStreams)(implicitly[Schema[Book]].asArray, CodecFormat.Json()))
+    .in(streamTextBody(PekkoStreams)(CodecFormat.Json()))
+    .out(streamBody(PekkoStreams)(implicitly[Schema[Book]].asArray, CodecFormat.Json()))
 
-  val oneOfStreamingEndpoint: PublicEndpoint[String, Unit, Source[ByteString, Any], AkkaStreams] = baseBookEndpoint.get
+  val oneOfStreamingEndpoint: PublicEndpoint[String, Unit, Source[ByteString, Any], PekkoStreams] = baseBookEndpoint.get
     .summary("List all books in streaming with format defined by Accept header")
     .in("stream" / "formatted")
     .in(
@@ -48,8 +48,8 @@ class BookEndpoints @Inject() (securedEndpoints: SecuredEndpoints) {
       oneOfBody(
         // Order is important: 1st one will be the default if no Accept header provided
         // It should match server implementation behavior as well
-        streamBody(AkkaStreams)(implicitly[Schema[Book]].asArray, CodecFormat.Json()).toEndpointIO,
-        streamTextBody(AkkaStreams)(CodecFormat.TextPlain()).toEndpointIO
+        streamBody(PekkoStreams)(implicitly[Schema[Book]].asArray, CodecFormat.Json()).toEndpointIO,
+        streamTextBody(PekkoStreams)(CodecFormat.TextPlain()).toEndpointIO
       )
     )
 
