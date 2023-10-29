@@ -4,10 +4,10 @@ import models.{Author, Book}
 import org.apache.pekko.stream.scaladsl.Source
 import org.apache.pekko.util.ByteString
 import sttp.capabilities.pekko.PekkoStreams
-import sttp.model.StatusCode
-import sttp.tapir._
-import sttp.tapir.generic.auto._
-import sttp.tapir.json.play._
+import sttp.model.{ContentTypeRange, StatusCode}
+import sttp.tapir.*
+import sttp.tapir.generic.auto.*
+import sttp.tapir.json.play.*
 import sttp.tapir.server.PartialServerEndpoint
 
 import javax.inject.{Inject, Singleton}
@@ -37,13 +37,16 @@ class BookEndpoints @Inject() (securedEndpoints: SecuredEndpoints) {
     .in(streamTextBody(PekkoStreams)(CodecFormat.Json()))
     .out(streamBody(PekkoStreams)(implicitly[Schema[Book]].asArray, CodecFormat.Json()))
 
-  val oneOfStreamingEndpoint: PublicEndpoint[String, Unit, Source[ByteString, Any], PekkoStreams] = baseBookEndpoint.get
+  // Accept header is hidden in SwaggerUI because response "Content-type" can be chosen in the UI and sets it implicitly
+  // This is automatic when using extractFromRequest, otherwise we could have used .schema(_.copy(hidden = true))
+  private val acceptHeader: EndpointInput[Seq[ContentTypeRange]] = extractFromRequest(_.acceptsContentTypes)
+    // Extract the Right part of acceptsContentTypes
+    .mapDecode(accepts => DecodeResult.Value(accepts.getOrElse(Seq.empty)))(Right(_))
+
+  val oneOfStreamingEndpoint: PublicEndpoint[Seq[ContentTypeRange], String, Source[ByteString, Any], PekkoStreams] = baseBookEndpoint.get
     .summary("List all books in streaming with format defined by Accept header")
     .in("stream" / "formatted")
-    .in(
-      // Hide the header in OpenApi doc as it's already automatically provided due to the response Content-Type choices
-      header[String]("Accept").schema(_.hidden(true))
-    )
+    .in(acceptHeader)
     .out(
       oneOfBody(
         // Order is important: 1st one will be the default if no Accept header provided
@@ -52,6 +55,8 @@ class BookEndpoints @Inject() (securedEndpoints: SecuredEndpoints) {
         streamTextBody(PekkoStreams)(CodecFormat.TextPlain()).toEndpointIO
       )
     )
+    .errorOut(stringBody)
+    .errorOut(statusCode(StatusCode.BadRequest))
 
   val addBookEndpoint: PartialServerEndpoint[String, AuthenticatedContext, Book, AuthError, Unit, Any, Future] =
     baseSecuredBookEndpoint.post
