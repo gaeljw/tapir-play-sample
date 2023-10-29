@@ -31,7 +31,7 @@ libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-openapi-docs" % t
 // You can also host Swagger UI by yourself and get rid of this dependency with more manual setup
 libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle" % tapirVersion
 
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.0" % Test
 
 // For Akka Streams (if using streaming)
 libraryDependencies += "com.softwaremill.sttp.shared" %% "pekko" % "1.3.16"
