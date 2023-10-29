@@ -5,6 +5,9 @@
 - Update Tapir to 1.8.2
 - Enforce Jackson version consistency
 
+- Update sbt to 1.9.7
+- Update Scala to 2.13.12
+
 ## 0.13.0
 
 - Simplify Swagger UI integration
