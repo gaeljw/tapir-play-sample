@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.14.1
+
+- Update sbt-release to 1.1.0
+
 ## 0.14.0
 
 - Update Tapir to 1.8.2

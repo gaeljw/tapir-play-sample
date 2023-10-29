@@ -1,5 +1,5 @@
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.8.20")
-addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.13")
+addSbtPlugin("com.github.sbt" % "sbt-release" % "1.1.0")
 addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.2")
 
 // * org.scala-lang.modules:scala-xml_2.12:2.1.0 (early-semver) is selected over {1.2.0, 1.1.1}
