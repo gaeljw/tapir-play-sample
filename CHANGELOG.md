@@ -3,6 +3,7 @@
 ## 0.14.1
 
 - Update sbt-release to 1.1.0
+- Update Jackson to 2.15.3
 
 ## 0.14.0
 
