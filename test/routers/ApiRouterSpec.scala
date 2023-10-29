@@ -1,9 +1,9 @@
 package routers
 
-import akka.actor.ActorSystem
-import akka.stream.scaladsl.Source
-import akka.util.ByteString
 import models.{Author, Book}
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.stream.scaladsl.Source
+import org.apache.pekko.util.ByteString
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneServerPerTest
 import play.api.libs.json.{JsValue, Json}
