@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.16.0
+
+- Upgrade to Scala 3.3
+
 ## 0.15.0
 
 - Upgrade Play to 3.0.0 (with Pekko instead of Akka)
