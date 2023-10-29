@@ -11,7 +11,8 @@ publishTo := Some(Resolver.file("Unused transient repository", file("target/unus
 
 scalaVersion := "2.13.12"
 
-val tapirVersion = "1.7.3"
+val tapirVersion = "1.8.2"
+val jacksonVersion = "2.14.3"
 
 libraryDependencies += guice
 
@@ -39,3 +40,14 @@ libraryDependencies += "com.softwaremill.sttp.shared" %% "akka" % "1.3.16"
 
 // Adds additional packages into conf/routes
 // play.sbt.routes.RoutesKeys.routesImport += "com.github.gaeljw.binders._"
+
+// Enforce Jackson consistency
+dependencyOverrides += "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonVersion
+dependencyOverrides += "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
+dependencyOverrides += "com.fasterxml.jackson.core" % "jackson-databind" % jacksonVersion
+dependencyOverrides += "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % jacksonVersion
+dependencyOverrides += "com.fasterxml.jackson.datatype" % "jackson-datatype-jdk8" % jacksonVersion
+dependencyOverrides += "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % jacksonVersion
+dependencyOverrides += "com.fasterxml.jackson.module" % "jackson-module-parameter-names" % jacksonVersion
+dependencyOverrides += "com.fasterxml.jackson.module" % "jackson-module-paranamer" % jacksonVersion
+dependencyOverrides += "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion

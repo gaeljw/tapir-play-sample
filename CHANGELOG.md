@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.14.0
+
+- Update Tapir to 1.8.2
+- Enforce Jackson version consistency
+
 ## 0.13.0
 
 - Simplify Swagger UI integration
