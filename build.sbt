@@ -34,7 +34,7 @@ libraryDependencies += "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
 
 // For Akka Streams (if using streaming)
-libraryDependencies += "com.softwaremill.sttp.shared" %% "pekko" % "1.3.22"
+libraryDependencies += "com.softwaremill.sttp.shared" %% "pekko" % "1.4.2"
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.github.gaeljw.controllers._"
