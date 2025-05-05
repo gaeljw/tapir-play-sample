@@ -9,7 +9,7 @@ lazy val root = (project in file("."))
 
 publishTo := Some(Resolver.file("Unused transient repository", file("target/unusedrepo")))
 
-scalaVersion := "3.6.4"
+scalaVersion := "3.7.0"
 
 val tapirVersion = "1.11.24"
 val jacksonVersion = "2.18.3"
