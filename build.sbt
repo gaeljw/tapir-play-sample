@@ -3,7 +3,7 @@ import com.here.bom.Bom
 name := """tapir-play-sample"""
 organization := "com.github.gaeljw"
 
-scalaVersion := "3.7.2"
+scalaVersion := "3.7.3"
 
 val tapirVersion = "1.11.43"
 
