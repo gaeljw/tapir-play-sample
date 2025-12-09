@@ -5,7 +5,7 @@ organization := "com.github.gaeljw"
 
 scalaVersion := "3.7.4"
 
-val tapirVersion = "1.13.0"
+val tapirVersion = "1.13.1"
 
 lazy val jacksonDependencies = Bom.dependencies("com.fasterxml.jackson" % "jackson-bom" % "2.20.1")
 
