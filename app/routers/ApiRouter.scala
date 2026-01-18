@@ -11,7 +11,7 @@ import javax.inject._
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ApiRouter @Inject() (apiController: BookController, apiDocumentation: ApiDocumentation, bookEndpoints: BookEndpoints)(implicit
+class ApiRouter @Inject() (apiController: BookController, apiDocumentation: ApiDocumentation, bookEndpoints: BookEndpoints)(using
     val materializer: Materializer,
     ec: ExecutionContext
 ) extends SimpleRouter {
@@ -19,7 +19,7 @@ class ApiRouter @Inject() (apiController: BookController, apiDocumentation: ApiD
   import apiDocumentation._
   import bookEndpoints._
 
-  private val playServerOptions: PlayServerOptions = PlayServerOptions.default(materializer, ec)
+  private val playServerOptions: PlayServerOptions = PlayServerOptions.default(using materializer, ec)
   private val interpreter = PlayServerInterpreter(playServerOptions)
 
   override def routes: Routes = {
