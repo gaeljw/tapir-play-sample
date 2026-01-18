@@ -4,3 +4,4 @@ logs
 /.bsp/sbt.json
 .metals/
 .vscode/
+sbt/
