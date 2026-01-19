@@ -11,7 +11,7 @@ scalacOptions ++= Seq(
 
 val tapirVersion = "1.13.5"
 
-lazy val jacksonDependencies = Bom.dependencies("com.fasterxml.jackson" % "jackson-bom" % "2.20.1")
+lazy val jacksonDependencies = Bom.dependencies("com.fasterxml.jackson" % "jackson-bom" % "2.21.0")
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
