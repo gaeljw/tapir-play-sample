@@ -3,7 +3,7 @@ import com.here.bom.Bom
 name := """tapir-play-sample"""
 organization := "com.github.gaeljw"
 
-scalaVersion := "3.8.1"
+scalaVersion := "3.8.2"
 
 scalacOptions ++= Seq(
   "-release:25"
