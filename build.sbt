@@ -9,7 +9,7 @@ scalacOptions ++= Seq(
   "-release:25"
 )
 
-val tapirVersion = "1.13.19"
+val tapirVersion = "1.13.21"
 
 lazy val jacksonDependencies = Bom.dependencies("com.fasterxml.jackson" % "jackson-bom" % "2.22.0")
 
