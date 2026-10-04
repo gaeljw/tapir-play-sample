@@ -2,7 +2,7 @@ package repositories
 
 import java.util.concurrent.atomic.AtomicReference
 
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 import models.{Author, Book}
 
 @Singleton

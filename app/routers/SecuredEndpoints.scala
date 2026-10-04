@@ -1,6 +1,6 @@
 package routers
 
-import javax.inject.{Inject, Singleton}
+import jakarta.inject.{Inject, Singleton}
 import sttp.model.StatusCode
 import sttp.tapir._
 import sttp.tapir.generic.auto._

@@ -7,7 +7,7 @@ import play.api.routing.SimpleRouter
 import sttp.tapir.server.play.{PlayServerInterpreter, PlayServerOptions}
 import sttp.tapir.swagger.SwaggerUI
 
-import javax.inject._
+import jakarta.inject._
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton

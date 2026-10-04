@@ -10,7 +10,7 @@ import sttp.tapir.generic.auto.*
 import sttp.tapir.json.play.*
 import sttp.tapir.server.PartialServerEndpoint
 
-import javax.inject.{Inject, Singleton}
+import jakarta.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton
