@@ -4,7 +4,7 @@ organization := "com.github.gaeljw"
 scalaVersion := "3.8.4"
 
 scalacOptions ++= Seq(
-  "-release:17"
+  "-release:25"
 )
 
 val tapirVersion = "1.13.31"
