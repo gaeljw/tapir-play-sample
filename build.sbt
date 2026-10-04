@@ -45,7 +45,7 @@ lazy val root = (project in file("."))
     libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.2" % Test,
 
     // For Akka Streams (if using streaming)
-    libraryDependencies += "com.softwaremill.sttp.shared" %% "pekko" % "1.5.2",
+    libraryDependencies += "com.softwaremill.sttp.shared" %% "pekko" % "1.5.3",
   )
   .settings(
     // Enforce Jackson consistency
