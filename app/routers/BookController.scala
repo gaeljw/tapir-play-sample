@@ -8,7 +8,7 @@ import play.api.libs.json.Json
 import repositories.BookRepository
 import sttp.model.{ContentTypeRange, MediaType}
 
-import javax.inject.*
+import jakarta.inject.*
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton

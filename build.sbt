@@ -1,5 +1,3 @@
-import com.here.bom.Bom
-
 name := """tapir-play-sample"""
 organization := "com.github.gaeljw"
 
@@ -11,8 +9,6 @@ scalacOptions ++= Seq(
 
 val tapirVersion = "1.13.31"
 
-lazy val jacksonDependencies = Bom.dependencies("com.fasterxml.jackson" % "jackson-bom" % "2.22.3")
-
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .settings(
@@ -21,10 +17,9 @@ lazy val root = (project in file("."))
   .settings(
     publishTo := Some(Resolver.file("Unused transient repository", file("target/unusedrepo")))
   )
-  // Load BOM
-  .settings(jacksonDependencies)
   .settings(
 
+    libraryDependencies += ("com.fasterxml.jackson" % "jackson-bom" % "2.22.3").pomOnly(),
     libraryDependencies += guice,
     libraryDependencies += ws,
     
@@ -46,10 +41,6 @@ lazy val root = (project in file("."))
 
     // For Akka Streams (if using streaming)
     libraryDependencies += "com.softwaremill.sttp.shared" %% "pekko" % "1.5.3",
-  )
-  .settings(
-    // Enforce Jackson consistency
-    dependencyOverrides ++= jacksonDependencies.key.value
   )
 
 // Adds additional packages into Twirl
