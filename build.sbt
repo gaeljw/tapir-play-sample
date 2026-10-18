@@ -19,7 +19,7 @@ lazy val root = (project in file("."))
   )
   .settings(
 
-    libraryDependencies += ("com.fasterxml.jackson" % "jackson-bom" % "2.22.3").pomOnly(),
+    libraryDependencies += ("com.fasterxml.jackson" % "jackson-bom" % "2.22.4").pomOnly(),
     libraryDependencies += guice,
     libraryDependencies += ws,
     
