@@ -7,7 +7,7 @@ scalacOptions ++= Seq(
   "-release:25"
 )
 
-val tapirVersion = "1.13.33"
+val tapirVersion = "1.14.1"
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
