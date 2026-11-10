@@ -1,7 +1,7 @@
 name := """tapir-play-sample"""
 organization := "com.github.gaeljw"
 
-scalaVersion := "3.10.0"
+scalaVersion := "3.10.1"
 
 scalacOptions ++= Seq(
   "-release:25"
